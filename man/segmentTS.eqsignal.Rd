@@ -4,8 +4,8 @@
 \alias{segmentTS.eqsignal}
 \title{Equalize Signals}
 \usage{
-segmentTS.eqsignal(obs.evnt = dataframe, sim.evnt = dataframe,
-  val.mindays = 250, manual_removal = NULL)
+segmentTS.eqsignal(obs.evnt, sim.evnt, val.mindays = 250,
+  manual_removal = NULL)
 }
 \arguments{
 \item{obs.evnt}{data.frame object with variables derived from SeriesDist.3X}

@@ -4,7 +4,7 @@
 \alias{segmentTS.segdist}
 \title{Segment Distance}
 \usage{
-segmentTS.segdist(obs.seg = dataframe, sim.seg = dataframe)
+segmentTS.segdist(obs.seg, sim.seg)
 }
 \arguments{
 \item{obs.evnt}{data.frame object with variables derived from SeriesDist.3X}

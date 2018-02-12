@@ -3,6 +3,8 @@
 #     ::required for segment analysis::      #
 #============================================#
 utils::globalVariables(c("."))
+#' @import stats
+NULL
 #============================================================================================
 # Functions for Series Distance of event-type signals (Ehret and Zehe 2011 HydroEarthSysSci)
 # ..modified for full time series as in (Calle, Poulter, ana Patra 2018)
@@ -21,7 +23,7 @@ utils::globalVariables(c("."))
 #' @param limit4match number to search the vector in obs.evnt,sim.evnt for similar events (set to zero)
 #' @return a list with both obs.evnt,sim.evnt with an additional variable for the matching index; used in SeriesDist.2X
 #' @export
-segmentTS.matchsignal     <- function(obs.evnt = dataframe, sim.evnt = dataframe, limit4match = 0){
+segmentTS.matchsignal     <- function(obs.evnt, sim.evnt, limit4match = 0){
   ##############################c
   #
   # D A T A   S T R U C T U R E
@@ -68,9 +70,10 @@ segmentTS.matchsignal     <- function(obs.evnt = dataframe, sim.evnt = dataframe
 #' Categorizes portions of the curve into clear signals {trough, up, no-event, down, or peak}
 #' based on a difference equation to determine first and second derivatives.
 #' @param dat data.frame object with variables of data value; variables derived from SeriesDist.1X
+#' @param lolim lower limit for consideration of matching; set to low value so that all values potentially match
 #' @return data.frame object with variable 'pos', categorized as above; used in SeriesDist.3X
 #' @export
-segmentTS.catsignal       <- function(dat = dataframe, lolim = -999){  
+segmentTS.catsignal       <- function(dat, lolim = -999){  
   ##############################c
   #
   # D A T A   S T R U C T U R E
@@ -132,7 +135,7 @@ segmentTS.catsignal       <- function(dat = dataframe, lolim = -999){
 #' @return list object with two data.frames, with number of peaks,troughs equalized; used in SeriesDist.4X
 #' @export
 
-segmentTS.eqsignal  <- function(obs.evnt = dataframe, sim.evnt = dataframe, val.mindays = 250, manual_removal=NULL){
+segmentTS.eqsignal  <- function(obs.evnt, sim.evnt, val.mindays = 250, manual_removal = NULL){
   ###############################
   #
   # D A T A   S T R U C T U R E
@@ -335,7 +338,7 @@ segmentTS.eqsignal  <- function(obs.evnt = dataframe, sim.evnt = dataframe, val.
 #' @param sim.evnt data.frame, variables as in obs.evnt, but for simulated data
 #' @return list object with 4 outputs: time-series of the matching times and values (poly_t,poly) and the distance statistics (dist_tdiff,dist_vdiff)
 #' @export
-segmentTS.segdist <- function(obs.seg = dataframe, sim.seg = dataframe){
+segmentTS.segdist <- function(obs.seg, sim.seg){
   ##############################c
   #
   # D A T A   S T R U C T U R E

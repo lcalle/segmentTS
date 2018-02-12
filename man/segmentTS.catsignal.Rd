@@ -4,10 +4,12 @@
 \alias{segmentTS.catsignal}
 \title{Categorize Signals}
 \usage{
-segmentTS.catsignal(dat = dataframe, lolim = -999)
+segmentTS.catsignal(dat, lolim = -999)
 }
 \arguments{
 \item{dat}{data.frame object with variables of data value; variables derived from SeriesDist.1X}
+
+\item{lolim}{lower limit for consideration of matching; set to low value so that all values potentially match}
 }
 \value{
 data.frame object with variable 'pos', categorized as above; used in SeriesDist.3X
