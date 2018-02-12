@@ -21,7 +21,7 @@ utils::globalVariables(c("."))
 #' @param limit4match number to search the vector in obs.evnt,sim.evnt for similar events (set to zero)
 #' @return a list with both obs.evnt,sim.evnt with an additional variable for the matching index; used in SeriesDist.2X
 #' @export
-segmentTS.matchsignal     <- function(obs.evnt = df, sim.evnt =  df, limit4match = 0){
+segmentTS.matchsignal     <- function(obs.evnt = dataframe, sim.evnt = dataframe, limit4match = 0){
   ##############################c
   #
   # D A T A   S T R U C T U R E
@@ -70,7 +70,7 @@ segmentTS.matchsignal     <- function(obs.evnt = df, sim.evnt =  df, limit4match
 #' @param dat data.frame object with variables of data value; variables derived from SeriesDist.1X
 #' @return data.frame object with variable 'pos', categorized as above; used in SeriesDist.3X
 #' @export
-segmentTS.catsignal       <- function(dat = df, lolim = -999){  
+segmentTS.catsignal       <- function(dat = dataframe, lolim = -999){  
   ##############################c
   #
   # D A T A   S T R U C T U R E
@@ -132,8 +132,8 @@ segmentTS.catsignal       <- function(dat = df, lolim = -999){
 #' @return list object with two data.frames, with number of peaks,troughs equalized; used in SeriesDist.4X
 #' @export
 
-segmentTS.eqsignal  <- function(obs.evnt = df, sim.evnt = df, val.mindays = 250, manual_removal=NULL){
-  ##############################c
+segmentTS.eqsignal  <- function(obs.evnt = dataframe, sim.evnt = dataframe, val.mindays = 250, manual_removal=NULL){
+  ###############################
   #
   # D A T A   S T R U C T U R E
   # -- (obs.evnt, sim.evnt) data.frame with variables:
@@ -143,7 +143,7 @@ segmentTS.eqsignal  <- function(obs.evnt = df, sim.evnt = df, val.mindays = 250,
   # Note: n= # of obs.evnts; m= # of sim.evnts
   # Returns: list of two data.frames, with number of peaks,troughs equalized
   # -- focuses on main signals, not local maxima/minima
-  ##############################c
+  ###############################
   #peak & trough values
   obs.peak   = obs.evnt[which(obs.evnt$pos== 2),]
   obs.trough = obs.evnt[which(obs.evnt$pos== -2),]
@@ -223,27 +223,27 @@ segmentTS.eqsignal  <- function(obs.evnt = df, sim.evnt = df, val.mindays = 250,
     rm_false_peaksValleys          <- function(df.peak,df.trough){
       
       #reset data for removing false peaks
-      df = rbind(df.peak,df.trough)
+      dfx = rbind(df.peak,df.trough)
       #sort by date/time
-      df = df[order(df$time),]
+      dfx = dfx[order(dfx$time),]
       
       #keep only lowest of consective valleys and highest of consecutive peaks
       rm_vec = c()
-      for(k in 1:(nrow(df)-1)){
-        if(df$pos[k] == df$pos[k+1]){
-          if(df$pos[k] == -2){
+      for(k in 1:(nrow(dfx)-1)){
+        if(dfx$pos[k] == dfx$pos[k+1]){
+          if(dfx$pos[k] == -2){
             #troughs: keep lowest value
-            ifelse(df$val[k] < df$val[k+1], rm_vec <- c(rm_vec,-1*(k+1)), rm_vec <- c(rm_vec,-1*k))
+            ifelse(dfx$val[k] < dfx$val[k+1], rm_vec <- c(rm_vec,-1*(k+1)), rm_vec <- c(rm_vec,-1*k))
           }else{
             #peaks: keep greatest value
-            ifelse(df$val[k] > df$val[k+1], rm_vec <- c(rm_vec,-1*(k+1)), rm_vec <- c(rm_vec,-1*k))
+            ifelse(dfx$val[k] > dfx$val[k+1], rm_vec <- c(rm_vec,-1*(k+1)), rm_vec <- c(rm_vec,-1*k))
           }
         }
       }
       #remove false peaks,valleys if they exist
-      if(!is.null(rm_vec)){df = df[rm_vec,]}
+      if(!is.null(rm_vec)){dfx = dfx[rm_vec,]}
       
-      return(df)
+      return(dfx)
 }
     equalize_peaksValleys          <- function(o.peak, o.trough, s.peak, s.trough, type="equalPeaks or minDays",min.days=250){
       #o.peak is for observations
@@ -301,13 +301,13 @@ segmentTS.eqsignal  <- function(obs.evnt = df, sim.evnt = df, val.mindays = 250,
       ls.dat = list(o.peak, o.trough, s.peak, s.trough)
       return(ls.dat)
 }
-    format_minDays_btwn_peakValley <- function(df, peakTrough = "peak or trough", min.days= 250){
+    format_minDays_btwn_peakValley <- function(dfx = dataframe, peakTrough = "peak or trough", min.days= 250){
       rm_val = NULL
-      n= nrow(df)
+      n= nrow(dfx)
       
       diff=1:(n-1)
       for(j in 1:(n-1)){
-        diff[j]= abs(difftime(df$time[j],df$time[j+1], units='days'))
+        diff[j]= abs(difftime(dfx$time[j],dfx$time[j+1], units='days'))
       } 
       
       j = which(diff < min.days,arr.ind = TRUE)
@@ -315,16 +315,16 @@ segmentTS.eqsignal  <- function(obs.evnt = df, sim.evnt = df, val.mindays = 250,
         rm_val=1:length(j)
         for(k in 1:length(j)){
           if(peakTrough == 'peak'){
-            rm_val[k] = min(df$val[j[k]], df$val[j[k]+1])
+            rm_val[k] = min(dfx$val[j[k]], dfx$val[j[k]+1])
           }else if(peakTrough == 'trough'){
-            rm_val[k] = max(df$val[j[k]], df$val[j[k]+1])
+            rm_val[k] = max(dfx$val[j[k]], dfx$val[j[k]+1])
           }
         }
       }#end do something if peaks/troughs closer than min.days
       
       #remove peak with lower value value
-      if(!is.null(rm_val)){df <- df[!(df$val %in% rm_val),]}
-      return(df)
+      if(!is.null(rm_val)){dfx <- dfx[!(dfx$val %in% rm_val),]}
+      return(dfx)
 }
 
 #' Segment Distance
@@ -335,7 +335,7 @@ segmentTS.eqsignal  <- function(obs.evnt = df, sim.evnt = df, val.mindays = 250,
 #' @param sim.evnt data.frame, variables as in obs.evnt, but for simulated data
 #' @return list object with 4 outputs: time-series of the matching times and values (poly_t,poly) and the distance statistics (dist_tdiff,dist_vdiff)
 #' @export
-segmentTS.segdist <- function(obs.seg = df, sim.seg = df){
+segmentTS.segdist <- function(obs.seg = dataframe, sim.seg = dataframe){
   ##############################c
   #
   # D A T A   S T R U C T U R E
@@ -345,7 +345,7 @@ segmentTS.segdist <- function(obs.seg = df, sim.seg = df){
   # -- ($time) timing of values on curve, ordered by time
   #
   # Note: n= # of obs.segs; m= # of sim.segs
-  # Returns: two dfs; (1) dist.amp= (n) amplitude differences between obs and sims
+  # Returns: two dataframes; (1) dist.amp= (n) amplitude differences between obs and sims
   # -- focuses on main signals, not local maxima/minima
   ##############################c
   n=nrow(obs.seg)
