@@ -4,7 +4,7 @@
 \alias{segmentTS.catsignal}
 \title{Categorize Signals}
 \usage{
-segmentTS.catsignal(dat = df, lolim = -999)
+segmentTS.catsignal(dat = dataframe, lolim = -999)
 }
 \arguments{
 \item{dat}{data.frame object with variables of data value; variables derived from SeriesDist.1X}

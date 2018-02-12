@@ -4,7 +4,8 @@
 \alias{segmentTS.matchsignal}
 \title{Match Signals}
 \usage{
-segmentTS.matchsignal(obs.evnt = df, sim.evnt = df, limit4match = 0)
+segmentTS.matchsignal(obs.evnt = dataframe, sim.evnt = dataframe,
+  limit4match = 0)
 }
 \arguments{
 \item{obs.evnt}{data.frame object with variables of start time (decimal.date), end time (decimal.date), match (integer)}
