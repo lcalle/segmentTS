@@ -11,9 +11,10 @@
 #'
 #' This function matches the number of events in the time series. It is based
 #' on Ehret and Zehe's (2011) conception of event-type signals. But for our purposes,
-#' we treat the full time series as a single event and break up the time series into segements.
-#' ..this function is generally not used as we set all data points as the same 'event',
-#' ..but we keep this function here for future application.
+#' we treat the full time series as a single event and break up the time series into segements
+#' categorized as separate signals.
+#' This function is generally not used as we set all data points as the same 'event',
+#' but we keep this function here for future application.
 #' @param obs.evnt data.frame object with variables of start time (decimal.date), end time (decimal.date), match (integer)
 #' @param sim.evnt data.frame, as above, but for simulated data
 #' @param limit4match number to search the vector in obs.evnt,sim.evnt for similar events (set to zero)
@@ -63,8 +64,8 @@ SeriesDist.1MatchSignals     <- function(obs.evnt = df, sim.evnt =  df, limit4ma
 #' Categorize Signals
 #'
 #' This function takes in the time-series data for observed and simulated from SeriesDist.1X.
-#' Categorizes portions of the curve into clear signals of trough, up, no-event, down, or peak,
-#' ..based on a difference equation to determine first and second derivatives
+#' Categorizes portions of the curve into clear signals {trough, up, no-event, down, or peak}
+#' based on a difference equation to determine first and second derivatives.
 #' @param dat data.frame object with variables of data value; variables derived from SeriesDist.1X
 #' @return data.frame object with variable 'pos', categorized as above; used in SeriesDist.3X
 #' @export
@@ -118,14 +119,19 @@ SeriesDist.2CatSignals        <- function(dat = df, lolim = -999){
 #' This function takes in the time-series data for observed and simulated from SeriesDist.2X.
 #' Attempts to equalize the number of signals in simulated time-series to match number of signals in the obs.
 #' Modify the criteria for removing false peaks/troughs in this section. 
-#' ..i.e., remove short-term signals and focus on seasonal patterns of rise and fall
-#' ..also, set individual criteria to smooth signal characterization for different simulated time-seres
+#' i.e., remove short-term signals and focus on seasonal patterns of rise and fall.
+#' Also, set individual criteria to smooth signal characterization for different simulated time-series.
 #' @param obs.evnt data.frame object with variables derived from SeriesDist.3X
-#' @param sim.evnt data.frame, variables as in obs.evnt, but for simulated data
+#' @param sim.evnt data.frame, variables as in obs.evnt, but for simulated data.
+#' @param val.mindays integer number of timesteps (days) between peaks troughs; helps to remove false peaks and troughs.
+#' @param manual_removal section of code identifying which peak or trough to remove from the time-series.
+#' By visual inspection, if the first peak/trough is a false peak/trough,
+#' then pass code as obs.peak[c(-1),] or obs.trough[c(-1),]. Add multiple removals via obs.peak[c(-1,-2,...),].
+#' Pass code for multiple signals with semi-colons as in manual_removal="obs.peak[c(-1),]; sim.peak[c(-1),]"
 #' @return list object with two data.frames, with number of peaks,troughs equalized; used in SeriesDist.4X
 #' @export
 
-SeriesDist.3EqualizeSignals  <- function(obs.evnt = df, sim.evnt = df,region_plot, is.dgvm="FALSE"){
+SeriesDist.3EqualizeSignals  <- function(obs.evnt = df, sim.evnt = df, val.mindays = 250, manual_removal=NULL){
   ##############################c
   #
   # D A T A   S T R U C T U R E
@@ -142,87 +148,13 @@ SeriesDist.3EqualizeSignals  <- function(obs.evnt = df, sim.evnt = df,region_plo
   obs.trough = obs.evnt[which(obs.evnt$pos== -2),]
   sim.peak   = sim.evnt[which(sim.evnt$pos== 2),]
   sim.trough = sim.evnt[which(sim.evnt$pos== -2),]
-  
-  #-------------------------------------
+ 
+  #-------------------------------------------
   # match segment by visual inspection
   # ..rise-rise, decline-decline
-  #-------------------------------------
-  for(foldcode_manual_adjust_peakTrough in 1:1){
-      if(region_plot==2){
-        if(is.dgvm =="OCN" || is.dgvm =="VISIT"){
-          obs.peak = obs.peak[c(-1),]
-        }else if(is.dgvm =="LPJ"){
-          obs.peak = obs.peak[c(-1),]
-          sim.trough = sim.trough[c(-2,-4),]
-        }else if(is.dgvm =="LPX"){
-          obs.peak = obs.peak[c(-1),]
-        }else if(is.dgvm =="JULES"){
-          obs.peak   = obs.peak[c(-1),]
-          sim.peak   = sim.peak[c(-1),]
-          sim.trough = sim.trough[c(-1),]
-        }
-      }else if(region_plot==4){ 
-        if(is.dgvm =="LPJ"){
-          obs.peak = obs.peak[c(-1,-2,-3),]
-          sim.peak = sim.peak[c(-3,-5),]
-        }else if(is.dgvm =='JULES'){
-          sim.trough = sim.trough[c(-1,-2),]
-        }else if(is.dgvm =='OCN'){
-          sim.peak   = sim.peak[c(-1),]
-          sim.trough = sim.trough[c(-1),]
-        }  
-      }else if(region_plot==5){
-        if(is.dgvm =="LPJ" || is.dgvm =="LPX" || is.dgvm =="VISIT"){
-          obs.peak = obs.peak[c(-1),]
-        }
-      }else if(region_plot==6){
-        if(is.dgvm == "CLM"){
-          sim.peak = sim.peak[c(-1,-3),]
-        }else if(is.dgvm == "ORCHIDEE"){
-          sim.peak = sim.peak[c(-8),]
-        }else if(is.dgvm == "OCN"){
-          sim.peak = sim.peak[c(-6,-8),]
-        }else if(is.dgvm == "LPX"){
-          sim.peak = sim.peak[c(-3),]
-        }else if(is.dgvm == "JULES"){
-          sim.peak = sim.peak[c(-6,-8),]
-          sim.trough = sim.trough[c(-1),]
-        }
-      }else if(region_plot==7){
-        if(is.dgvm != "ORCHIDEE"){
-          obs.peak = obs.peak[c(-1,-2),] 
-        }
-      }else if(region_plot==8){
-        if(is.dgvm =="ORCHIDEE"){
-          sim.peak = sim.peak[c(-1,-2),]
-        }else if(is.dgvm =="CLM"){
-          sim.peak = sim.peak[c(-1),]
-        }
-      }else if(region_plot==9){
-        obs.peak = obs.peak[c(-2),]
-        if(is.dgvm =="CLM" || is.dgvm =="ORCHIDEE"){
-          sim.peak = sim.peak[c(-1),]
-        }else if(is.dgvm =="JULES"){
-          sim.peak   = sim.peak[c(-1,-3,-4),]
-          sim.trough = sim.trough[c(-5),]
-        }else if(is.dgvm =="OCN"){
-          sim.peak = sim.peak[c(-1,-2,-3),]
-        }
-      }else if(region_plot==10){
-        obs.peak = obs.peak[c(-1,-3,-5),]
-        obs.trough = obs.trough[c(-1,-3,-5,-7),]
-        if(is.dgvm =="JULES"){
-          sim.peak = sim.peak[c(-1,-3),]
-          sim.trough = sim.trough[c(-1,-3),] 
-        }
-      }else if(region_plot==11){
-        if(is.dgvm =="LPJ" || is.dgvm =="LPX" || is.dgvm =="VISIT"){
-          #sim.peak = sim.peak[c(-1),]
-        }else if(is.dgvm=="CLM"){
-          sim.peak = sim.peak[c(-1),]
-        }
-      }
-  }#..end foldcode    
+  # ..taken as input conditional code section
+  #-------------------------------------------
+  if(!is.null(manual_removal)){manual_removal}  
 
   #------------------------------------------
   # constrain peaks (+) troughs (-) values
@@ -252,15 +184,6 @@ SeriesDist.3EqualizeSignals  <- function(obs.evnt = df, sim.evnt = df,region_plo
   
   obs.seg= nrow(obs.peak) + nrow(obs.trough) - 1
   sim.seg= nrow(sim.peak) + nrow(sim.trough) - 1
-  #-------------------------------------------
-  # try to equalize # of peaks, troughs 
-  # ..manually adjust for regions, models
-  #-------------------------------------------
-  if(region_plot == 4 || region_plot == 6){
-    val.mindays <- 150
-  }else if(region_plot == 3 && is.dgvm=='JULES'){
-    val.mindays <- 150
-  }else{val.mindays <- 250}
   
   updateBool=FALSE
   if(obs.seg != sim.seg){
