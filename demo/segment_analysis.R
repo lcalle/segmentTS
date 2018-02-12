@@ -4,8 +4,8 @@
 # ..plot segment matching by model, region, segment 
 # ..get statistics for series distance
 #......................................................
-inDir = "data"
-outDir= "outputs"
+inDir = "data/"
+outDir= "outputs/"
 #set region codes and corresponding region names for reference
 plot_title_codes   <- c(2,3,4,11,5,6,8,7,9,10)
 plot_title_regions <- c("NA_Temperate","SA_Tropical", "SA_Temperate", "Europe","Africa_Northern","Africa_Southern","Eurasia_Temperate","Eurasia_Boreal","Asia_Tropical","Australia")
@@ -32,7 +32,7 @@ for(reg_j in 1:length(plot_title_codes)){
   }
 
   #save data bby region
-  saveRDS(object = list_errorStats_tracerRegion, file = paste0("segmentTS/outputs/seriesDistance_ccgcrv_region_",plot_title_codes[reg_j],"_",tracer_type,".RDS"))
+  saveRDS(object = list_errorStats_tracerRegion, file = paste0(outDir,"seriesDistance_ccgcrv_region_",plot_title_codes[reg_j],"_",tracer_type,".RDS"))
 }#..end region loop
 
 
