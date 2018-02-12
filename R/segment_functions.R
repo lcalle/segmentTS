@@ -20,7 +20,7 @@
 #' @param limit4match number to search the vector in obs.evnt,sim.evnt for similar events (set to zero)
 #' @return a list with both obs.evnt,sim.evnt with an additional variable for the matching index; used in SeriesDist.2X
 #' @export
-SeriesDist.1MatchSignals     <- function(obs.evnt = df, sim.evnt =  df, limit4match = 0){
+segmentTS.matchsignal     <- function(obs.evnt = df, sim.evnt =  df, limit4match = 0){
   ##############################c
   #
   # D A T A   S T R U C T U R E
@@ -63,13 +63,13 @@ SeriesDist.1MatchSignals     <- function(obs.evnt = df, sim.evnt =  df, limit4ma
 
 #' Categorize Signals
 #'
-#' This function takes in the time-series data for observed and simulated from SeriesDist.1X.
+#' This function takes in the time-series data for observed and simulated from segmentTS.matchsignal.
 #' Categorizes portions of the curve into clear signals {trough, up, no-event, down, or peak}
 #' based on a difference equation to determine first and second derivatives.
 #' @param dat data.frame object with variables of data value; variables derived from SeriesDist.1X
 #' @return data.frame object with variable 'pos', categorized as above; used in SeriesDist.3X
 #' @export
-SeriesDist.2CatSignals        <- function(dat = df, lolim = -999){  
+segmentTS.catsignal       <- function(dat = df, lolim = -999){  
   ##############################c
   #
   # D A T A   S T R U C T U R E
@@ -116,7 +116,7 @@ SeriesDist.2CatSignals        <- function(dat = df, lolim = -999){
 
 #' Equalize Signals
 #'
-#' This function takes in the time-series data for observed and simulated from SeriesDist.2X.
+#' This function takes in the time-series data for observed and simulated from segmentTS.catsignal.
 #' Attempts to equalize the number of signals in simulated time-series to match number of signals in the obs.
 #' Modify the criteria for removing false peaks/troughs in this section. 
 #' i.e., remove short-term signals and focus on seasonal patterns of rise and fall.
@@ -131,7 +131,7 @@ SeriesDist.2CatSignals        <- function(dat = df, lolim = -999){
 #' @return list object with two data.frames, with number of peaks,troughs equalized; used in SeriesDist.4X
 #' @export
 
-SeriesDist.3EqualizeSignals  <- function(obs.evnt = df, sim.evnt = df, val.mindays = 250, manual_removal=NULL){
+segmentTS.eqsignal  <- function(obs.evnt = df, sim.evnt = df, val.mindays = 250, manual_removal=NULL){
   ##############################c
   #
   # D A T A   S T R U C T U R E
@@ -328,13 +328,13 @@ SeriesDist.3EqualizeSignals  <- function(obs.evnt = df, sim.evnt = df, val.minda
 
 #' Segment Distance
 #'
-#' This function takes in the time-series data for observed and simulated from SeriesDist.3X.
+#' This function takes in the time-series data for observed and simulated from segmentTS.eqsignal.
 #' Matches similar signals in the two time-series. Distance statistics are simulation - observation.
 #' @param obs.evnt data.frame object with variables derived from SeriesDist.3X
 #' @param sim.evnt data.frame, variables as in obs.evnt, but for simulated data
 #' @return list object with 4 outputs: time-series of the matching times and values (poly_t,poly) and the distance statistics (dist_tdiff,dist_vdiff)
 #' @export
-SeriesDist.4SegmentDistance <- function(obs.seg = df, sim.seg = df){
+segmentTS.segdist <- function(obs.seg = df, sim.seg = df){
   ##############################c
   #
   # D A T A   S T R U C T U R E
