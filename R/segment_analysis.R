@@ -6,10 +6,14 @@ source("segmentTS/R/segment_functions.R")
 #
 # ..plot segment matching by model, region, segment 
 # ..get statistics for series distance
-#
-# NOTE: ocean (ocn09) no real seasonal cycle,
-#       ..so we omit below; code is place for ocn09
 #......................................................
+inDir = "segmentTS/data/"
+outDir= "segmentTS/outputs/"
+#set region codes and corresponding region names for reference
+plot_title_codes   <- c(2,3,4,11,5,6,8,7,9,10)
+plot_title_regions <- c("NA_Temperate","SA_Tropical", "SA_Temperate", "Europe","Africa_Northern","Africa_Southern","Eurasia_Temperate","Eurasia_Boreal","Asia_Tropical","Australia")
+tracers = c('dgvm'); dgvms = c("CLM", "JULES", "LPJ", "LPX", "OCN", "ORCHIDEE","VISIT") 
+
 for(reg_j in 1:length(plot_title_codes)){
   #initlize list, counter
   list_errorStats_tracerRegion = list()
