@@ -1,14 +1,11 @@
-#required functions
-source("segmentTS/R/segment_functions.R")
-
 #......................................................
 #  M A I N   L O O P  -  S E R I E S  D I S T A N C E
 #
 # ..plot segment matching by model, region, segment 
 # ..get statistics for series distance
 #......................................................
-inDir = "segmentTS/data/"
-outDir= "segmentTS/outputs/"
+inDir = "data"
+outDir= "outputs"
 #set region codes and corresponding region names for reference
 plot_title_codes   <- c(2,3,4,11,5,6,8,7,9,10)
 plot_title_regions <- c("NA_Temperate","SA_Tropical", "SA_Temperate", "Europe","Africa_Northern","Africa_Southern","Eurasia_Temperate","Eurasia_Boreal","Asia_Tropical","Australia")
