@@ -2,6 +2,7 @@
 #            F U N C T I O N S               #
 #     ::required for segment analysis::      #
 #============================================#
+utils::globalVariables(c("."))
 #============================================================================================
 # Functions for Series Distance of event-type signals (Ehret and Zehe 2011 HydroEarthSysSci)
 # ..modified for full time series as in (Calle, Poulter, ana Patra 2018)
