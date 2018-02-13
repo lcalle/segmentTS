@@ -11,8 +11,8 @@ NULL
 #' observed and simulated time-series.
 #' @import graphics
 #' @import grDevices
-#' @param df.obs.evnt data.frame object for full time-series of observational data, from segmentTS.1matchsignal.
-#' @param df.sim.evnt data.frame object for full time-series of simulated data, from segmentTS.1matchsignal.
+#' @param obs.evnt data.frame object for full time-series of observational data, from segmentTS.1matchsignal.
+#' @param sim.evnt data.frame object for full time-series of simulated data, from segmentTS.1matchsignal.
 #' @param ls.evnt.pos list object from segmentTS.3eqsignal with positions of
 #' the peaks and troughs in the full time-series. Defines the boundaries of 
 #' the segments.
@@ -27,7 +27,7 @@ NULL
 #' At minimum, requires variables of values and date (YYYY-MM-DD)
 #' @return a data.frame object segment-based statistical summaries for all segments, obs and sim.
 #' @export
-segmentTS.4statsplots <- function(df.obs.evnt,df.sim.evnt,ls.evnt.pos,obs.name="obs",sim.name="sim",time.units='days',val.units=NULL,save.plot=FALSE,outDir=getwd(),region.name=NULL){
+segmentTS.4statsplots <- function(obs.evnt,sim.evnt,ls.evnt.pos,obs.name="obs",sim.name="sim",time.units='days',val.units=NULL,save.plot=FALSE,outDir=getwd(),region.name=NULL){
 
 	#separate observation,simulation
 	obs.seg.time = ls.evnt.pos[['obs.eq']]
@@ -67,8 +67,8 @@ segmentTS.4statsplots <- function(df.obs.evnt,df.sim.evnt,ls.evnt.pos,obs.name="
       #-------------------------------------------------------
       # get segment based on boundary positions for segment
       #-------------------------------------------------------
-      obs.segment = df.obs.evnt[which(df.obs.evnt$time >= obs.seg.time$time[seg_beg] & df.obs.evnt$time <= obs.seg.time$time[seg_end]),]
-      sim.segment = df.sim.evnt[which(df.sim.evnt$time >= sim.seg.time$time[seg_beg] & df.sim.evnt$time <= sim.seg.time$time[seg_end]),]
+      obs.segment = obs.evnt[which(obs.evnt$time >= obs.seg.time$time[seg_beg] & obs.evnt$time <= obs.seg.time$time[seg_end]),]
+      sim.segment = sim.evnt[which(sim.evnt$time >= sim.seg.time$time[seg_beg] & sim.evnt$time <= sim.seg.time$time[seg_end]),]
       
       #---------------------------------------
       # get segment-based distance statistics
@@ -85,20 +85,20 @@ segmentTS.4statsplots <- function(df.obs.evnt,df.sim.evnt,ls.evnt.pos,obs.name="
       graphics::par(mar=c(4,6,5,3),mfcol=c(2,2))
 
       #plot attributes
-      x.lim = c(min(df.obs.evnt$time,obs.segment$time[1],sim.segment$time[1]), max(obs.segment$time[length(obs.segment$time)],sim.segment$time[length(sim.segment$time)]))
-      y.lim = c(min(df.obs.evnt$val,obs.segment$val,sim.segment$val), max(df.obs.evnt$val,obs.segment$val,sim.segment$val))
+      x.lim = c(min(obs.evnt$time,obs.segment$time[1],sim.segment$time[1]), max(obs.segment$time[length(obs.segment$time)],sim.segment$time[length(sim.segment$time)]))
+      y.lim = c(min(obs.evnt$val,obs.segment$val,sim.segment$val), max(obs.evnt$val,obs.segment$val,sim.segment$val))
       plot.dates = seq.Date(from = x.lim[1], to = x.lim[2], by = 'month')
-      plot.all.dates = seq.Date(from = df.obs.evnt$time[1], to = df.obs.evnt$time[length(df.obs.evnt$time)], by = 'month')
+      plot.all.dates = seq.Date(from = obs.evnt$time[1], to = obs.evnt$time[length(obs.evnt$time)], by = 'month')
 
       #plot
-      graphics::plot(x= df.obs.evnt$time, y=  df.obs.evnt$val,lwd=3,
+      graphics::plot(x= obs.evnt$time, y=  obs.evnt$val,lwd=3,
              type='l', col='black', ylab='XCO2 (ppm)', xlab='',
              xlim= x.lim,
              ylim= y.lim, xaxt='n', cex.lab=2,cex.axis=1.5,
              cex.main=2,
              main=paste0('observation (black), simulation (red)',ifelse(!is.null(region.name),paste0('\n',region.name,''))))
       graphics::axis(side= 1, at= plot.all.dates, labels= format(plot.all.dates, "%b %y"), cex.axis = 1.5)
-      graphics::lines(x= df.sim.evnt$time,y= df.sim.evnt$val, type='l', col='red', lwd=2)
+      graphics::lines(x= sim.evnt$time,y= sim.evnt$val, type='l', col='red', lwd=2)
 
       #points for matching segments
       graphics::points(x=obs.segment$time[seq(1,length(obs.segment$time), length=25)], y=obs.segment$val[seq(1,length(obs.segment$time), length=25)], pch=21,cex=1.2, bg='deepskyblue')
@@ -109,8 +109,8 @@ segmentTS.4statsplots <- function(df.obs.evnt,df.sim.evnt,ls.evnt.pos,obs.name="
       # plot Close-up of Matching Segments
       #----------------------------------------
       #plot info for clarity
-      x.main = df.sim.evnt[which((df.sim.evnt$time %in% obs.segment$time)==TRUE),'time']
-      y.main = df.sim.evnt[which((df.sim.evnt$time %in% obs.segment$time)==TRUE), 'val']
+      x.main = sim.evnt[which((sim.evnt$time %in% obs.segment$time)==TRUE),'time']
+      y.main = sim.evnt[which((sim.evnt$time %in% obs.segment$time)==TRUE), 'val']
       x.lim = c(min(obs.segment$time[1],sim.segment$time[1]), max(obs.segment$time[length(obs.segment$time)],sim.segment$time[length(sim.segment$time)]))
       y.lim = c(min(obs.segment$val,sim.segment$val), max(obs.segment$val,sim.segment$val))
       main.label = 'Matching Segment'
@@ -121,7 +121,7 @@ segmentTS.4statsplots <- function(df.obs.evnt,df.sim.evnt,ls.evnt.pos,obs.name="
              type='l', col=col.sim, ylab=ifelse(!is.null(val.units),val.units,'units'), xlab='',xlim= x.lim, ylim= y.lim, xaxt='n', cex.lab=2,cex.axis=1.5,
              cex.main=2,main=main.label)
       graphics::axis(side= 1, at= plot.dates, labels= format(plot.dates, "%b %y"), cex.axis = 1.5)
-      graphics::lines(x= df.obs.evnt$time, y=df.obs.evnt$val,type='l')
+      graphics::lines(x= obs.evnt$time, y=obs.evnt$val,type='l')
       graphics::lines(x= obs.segment$time, y=obs.segment$val,type='l', col='black', lwd=4)
       graphics::lines(x= sim.segment$time, y=sim.segment$val,type='l', col=col.sim, lwd=4)
       graphics::points(x=obs.segment$time[seq(1,length(obs.segment$time), length=35)], y=obs.segment$val[seq(1,length(obs.segment$time), length=35)], pch=21,cex=1.2, bg='deepskyblue')
