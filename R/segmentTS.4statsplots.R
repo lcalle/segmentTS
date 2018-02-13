@@ -160,7 +160,7 @@ segmentTS.4statsplots <- function(obs.evnt,sim.evnt,ls.evnt.pos,obs.name="obs",s
       segment_type      = ifelse(obs.amp > 0, 'rise', 'fall')
       
       #update stats
-      df_errorStats[which(df_errorStats$tracer==obs.name & df_errorStats$segment == seg_j),'model']        <- obs.name
+      df_errorStats[which(df_errorStats$tracer==obs.name & df_errorStats$segment == seg_j),'tracer']        <- obs.name
       df_errorStats[which(df_errorStats$tracer==obs.name & df_errorStats$segment == seg_j),'segment_type'] <- segment_type
       df_errorStats[which(df_errorStats$tracer==obs.name & df_errorStats$segment == seg_j),'period']       <- abs(obs.per)
       df_errorStats[which(df_errorStats$tracer==obs.name & df_errorStats$segment == seg_j),'amplitude']    <- abs(obs.amp)
@@ -176,7 +176,7 @@ segmentTS.4statsplots <- function(obs.evnt,sim.evnt,ls.evnt.pos,obs.name="obs",s
       segment_type = ifelse(obs.amp > 0, 'rise', 'fall')
       
       #update stats
-      df_errorStats[which(df_errorStats$tracer==sim.name & df_errorStats$segment == seg_j),'model']             <- sim.name
+      df_errorStats[which(df_errorStats$tracer==sim.name & df_errorStats$segment == seg_j),'tracer']            <- sim.name
       df_errorStats[which(df_errorStats$tracer==sim.name & df_errorStats$segment == seg_j),'n_obs']             <- nrow(obs.segment)
       df_errorStats[which(df_errorStats$tracer==sim.name & df_errorStats$segment == seg_j),'segment_type']      <- segment_type
       df_errorStats[which(df_errorStats$tracer==sim.name & df_errorStats$segment == seg_j),'period']            <- abs(sim.per)
