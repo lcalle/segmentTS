@@ -4,14 +4,19 @@
 \alias{segmentTS.1matchsignal}
 \title{Match Signals}
 \usage{
-segmentTS.1matchsignal(obs.evnt, sim.evnt, limit4match = 0)
+segmentTS.1matchsignal(obs.evnt, sim.evnt, full.series = TRUE,
+  limit4match = 0)
 }
 \arguments{
 \item{obs.evnt}{data.frame object with variables of start time (decimal.date), end time (decimal.date), match (integer)}
 
 \item{sim.evnt}{data.frame, as above, but for simulated data}
 
-\item{limit4match}{number to search the vector in obs.evnt,sim.evnt for similar events (set to zero)}
+\item{full.series}{default is TRUE. if FALSE, matching index depends on
+start and end times of events defined in the time-series.}
+
+\item{limit4match}{maximum number of values to search obs.evnt,sim.evnt for similar events.
+Default is zero, which means the search radius is small.}
 }
 \value{
 a list with both obs.evnt,sim.evnt with an additional variable for the matching index; used in segmentTS.2catsignal

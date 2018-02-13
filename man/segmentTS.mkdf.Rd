@@ -22,4 +22,5 @@ a list object with two data.frames, df.obs.evnt, df.sim.evnt formatted with new 
 }
 \description{
 This function makes the empty data frames for storing time-series event/signal data.
+Removes data in simulated dataset that does not overlap (in time) with observed data.
 }
