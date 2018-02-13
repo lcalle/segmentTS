@@ -9,6 +9,8 @@ NULL
 #'
 #' This function collates segment-based statistics based on the 
 #' observed and simulated time-series.
+#' @import graphics
+#' @import grDevices
 #' @param df.obs.evnt data.frame object for full time-series of observational data, from segmentTS.1matchsignal.
 #' @param df.sim.evnt data.frame object for full time-series of simulated data, from segmentTS.1matchsignal.
 #' @param ls.evnt.pos list object from segmentTS.3eqsignal with positions of
@@ -79,8 +81,8 @@ segmentTS.statsplots <- function(df.obs.evnt,df.sim.evnt,ls.evnt.pos,obs.name="o
       #############################
       #tri-plot with errors for segment
       #..only create one plot per model for the seasonal cycle
-      if(save.plot==TRUE){pdf(paste0(outDir,"/plot_",sim.name,"_segmentTS.pdf"),height=10,width=18)}
-      par(mar=c(4,6,5,3),mfcol=c(2,2))
+      if(save.plot==TRUE){grDevices::pdf(paste0(outDir,"/plot_",sim.name,"_segmentTS.pdf"),height=10,width=18)}
+      graphics::par(mar=c(4,6,5,3),mfcol=c(2,2))
 
       #plot attributes
       x.lim = c(min(df.obs.evnt$time,obs.segment$time[1],sim.segment$time[1]), max(obs.segment$time[length(obs.segment$time)],sim.segment$time[length(sim.segment$time)]))
@@ -89,19 +91,19 @@ segmentTS.statsplots <- function(df.obs.evnt,df.sim.evnt,ls.evnt.pos,obs.name="o
       plot.all.dates = seq.Date(from = df.obs.evnt$time[1], to = df.obs.evnt$time[length(df.obs.evnt$time)], by = 'month')
 
       #plot
-      plot(x= df.obs.evnt$time, y=  df.obs.evnt$val,lwd=3,
+      graphics::plot(x= df.obs.evnt$time, y=  df.obs.evnt$val,lwd=3,
              type='l', col='black', ylab='XCO2 (ppm)', xlab='',
              xlim= x.lim,
              ylim= y.lim, xaxt='n', cex.lab=2,cex.axis=1.5,
              cex.main=2,
              main=paste0('observation (black), simulation (red)',ifelse(!is.null(region.name),paste0('\n',region.name,''))))
-      axis(side= 1, at= plot.all.dates, labels= format(plot.all.dates, "%b %y"), cex.axis = 1.5)
-      lines(x= df.sim.evnt$time,y= df.sim.evnt$val, type='l', col='red', lwd=2)
+      graphics::axis(side= 1, at= plot.all.dates, labels= format(plot.all.dates, "%b %y"), cex.axis = 1.5)
+      graphics::lines(x= df.sim.evnt$time,y= df.sim.evnt$val, type='l', col='red', lwd=2)
 
       #points for matching segments
-      points(x=obs.segment$time[seq(1,length(obs.segment$time), length=25)], y=obs.segment$val[seq(1,length(obs.segment$time), length=25)], pch=21,cex=1.2, bg='deepskyblue')
-      points(x=sim.segment$time[seq(1,length(sim.segment$time), length=25)], y=sim.segment$val[seq(1,length(sim.segment$time), length=25)], pch=21,cex=1.2, bg='deepskyblue')
-      abline(h=0,lty=1, lwd=0.5, col='black')
+      graphics::points(x=obs.segment$time[seq(1,length(obs.segment$time), length=25)], y=obs.segment$val[seq(1,length(obs.segment$time), length=25)], pch=21,cex=1.2, bg='deepskyblue')
+      graphics::points(x=sim.segment$time[seq(1,length(sim.segment$time), length=25)], y=sim.segment$val[seq(1,length(sim.segment$time), length=25)], pch=21,cex=1.2, bg='deepskyblue')
+      graphics::abline(h=0,lty=1, lwd=0.5, col='black')
 
       #----------------------------------------
       # plot Close-up of Matching Segments
@@ -115,34 +117,34 @@ segmentTS.statsplots <- function(df.obs.evnt,df.sim.evnt,ls.evnt.pos,obs.name="o
       col.sim    = 'red'
 
       #close up plots
-      plot(x= x.main, y= y.main,
+      graphics::plot(x= x.main, y= y.main,
              type='l', col=col.sim, ylab=ifelse(!is.null(val.units),val.units,'units'), xlab='',xlim= x.lim, ylim= y.lim, xaxt='n', cex.lab=2,cex.axis=1.5,
              cex.main=2,main=main.label)
-      axis(side= 1, at= plot.dates, labels= format(plot.dates, "%b %y"), cex.axis = 1.5)
-      lines(x= df.obs.evnt$time, y=df.obs.evnt$val,type='l')
-      lines(x= obs.segment$time, y=obs.segment$val,type='l', col='black', lwd=4)
-      lines(x= sim.segment$time, y=sim.segment$val,type='l', col=col.sim, lwd=4)
-      points(x=obs.segment$time[seq(1,length(obs.segment$time), length=35)], y=obs.segment$val[seq(1,length(obs.segment$time), length=35)], pch=21,cex=1.2, bg='deepskyblue')
-      points(x=sim.segment$time[seq(1,length(sim.segment$time), length=35)], y=sim.segment$val[seq(1,length(sim.segment$time), length=35)], pch=21,cex=1.2, bg='deepskyblue')
+      graphics::axis(side= 1, at= plot.dates, labels= format(plot.dates, "%b %y"), cex.axis = 1.5)
+      graphics::lines(x= df.obs.evnt$time, y=df.obs.evnt$val,type='l')
+      graphics::lines(x= obs.segment$time, y=obs.segment$val,type='l', col='black', lwd=4)
+      graphics::lines(x= sim.segment$time, y=sim.segment$val,type='l', col=col.sim, lwd=4)
+      graphics::points(x=obs.segment$time[seq(1,length(obs.segment$time), length=35)], y=obs.segment$val[seq(1,length(obs.segment$time), length=35)], pch=21,cex=1.2, bg='deepskyblue')
+      graphics::points(x=sim.segment$time[seq(1,length(sim.segment$time), length=35)], y=sim.segment$val[seq(1,length(sim.segment$time), length=35)], pch=21,cex=1.2, bg='deepskyblue')
       #plot only a few connecting segments btwn obs and sim, otherwise clutter
-      segments(x0= obs.segment$time[c(TRUE,rep(FALSE,5))], y0= obs.segment$val[c(TRUE,rep(FALSE,5))],
+      graphics::segments(x0= obs.segment$time[c(TRUE,rep(FALSE,5))], y0= obs.segment$val[c(TRUE,rep(FALSE,5))],
                  x1= segment.dist[['poly_t']][c(TRUE,rep(FALSE,5))],
                  y1= segment.dist[['poly_v']][c(TRUE,rep(FALSE,5))], col='grey75')
-      abline(h=0,lty=1, lwd=0.5, col='black')
+      graphics::abline(h=0,lty=1, lwd=0.5, col='black')
 
       #----------------------------------------
       # Plot Timing (phase) & Magnitude Error
       #----------------------------------------
       #plot phase errror
-      plot(x=obs.segment$time, xaxt='n', y=segment.dist[['dist_tdiff']], type='o', pch=21, bg='grey25', ylab='Days', xlab='', xlim= x.lim,
+      graphics::plot(x=obs.segment$time, xaxt='n', y=segment.dist[['dist_tdiff']], type='o', pch=21, bg='grey25', ylab='Days', xlab='', xlim= x.lim,
              cex.lab=2, cex.axis=1.5, cex.main=2, main='Phase Eror')
-      axis(side= 1, at= plot.dates, labels= format(plot.dates, "%b %y"), cex.axis = 1.5)
-      abline(h=0,lty=1, lwd=0.5, col='black')
+      graphics::axis(side= 1, at= plot.dates, labels= format(plot.dates, "%b %y"), cex.axis = 1.5)
+      graphics::abline(h=0,lty=1, lwd=0.5, col='black')
       #plot magnitude error
-      plot(x=obs.segment$time, xaxt='n',  y=segment.dist[['dist_vdiff']], type='o', pch=24, bg='grey25', ylab='ppm', xlab='', xlim= x.lim,
+      graphics::plot(x=obs.segment$time, xaxt='n',  y=segment.dist[['dist_vdiff']], type='o', pch=24, bg='grey25', ylab='ppm', xlab='', xlim= x.lim,
              cex.lab=2, cex.axis=1.5,cex.main=2, main='Magnitude Error')
-      axis(side= 1, at= plot.dates, labels= format(plot.dates, "%b %y"), cex.axis = 1.5)
-      abline(h=0,lty=1, lwd=0.5, col='black')
+      graphics::axis(side= 1, at= plot.dates, labels= format(plot.dates, "%b %y"), cex.axis = 1.5)
+      graphics::abline(h=0,lty=1, lwd=0.5, col='black')
       # end plots
       
       ########################################
@@ -191,7 +193,7 @@ segmentTS.statsplots <- function(df.obs.evnt,df.sim.evnt,ls.evnt.pos,obs.name="o
       df_errorStats[which(df_errorStats$tracer==sim.name & df_errorStats$segment == seg_j),'magnitude_bias_mean'] <- mean(segment.dist$dist_vdiff)
       df_errorStats[which(df_errorStats$tracer==sim.name & df_errorStats$segment == seg_j),'magnitude_bias_var']  <- var(segment.dist$dist_vdiff)
     }#..end segment loop
-    if(save.plot==TRUE){dev.off()}
+    if(save.plot==TRUE){grDevices::dev.off()}
   #return data.frame for single region
   return(df_errorStats)
 }#..end of fn
