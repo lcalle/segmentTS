@@ -46,20 +46,19 @@ segmentTS.4statsplots <- function(obs.evnt,sim.evnt,ls.evnt.pos,obs.name="obs",s
                                tracer  = rep(c(obs.name,sim.name),times=num_segments),
                                n_obs   = rep(0,num_segments*2),
                                segment = rep(1:num_segments, each=2),
-                               timing_rmse      = rep(0,num_segments*2),
-                               timing_bias_max  = rep(0,num_segments*2),
-                               timing_bias_min  = rep(0,num_segments*2),
-                               timing_bias_mean = rep(0,num_segments*2),
-                               timing_bias_var  = rep(0,num_segments*2),
+							   segment_type = rep('null',num_segments*2),
+							   period           = rep(0,num_segments*2),
+                               amplitude        = rep(0,num_segments*2),
+                               timing_rmse         = rep(0,num_segments*2),
+                               timing_bias_max     = rep(0,num_segments*2),
+                               timing_bias_min     = rep(0,num_segments*2),
+                               timing_bias_mean    = rep(0,num_segments*2),
+                               timing_bias_var     = rep(0,num_segments*2),
                                magnitude_rmse      = rep(0,num_segments*2),
                                magnitude_bias_max  = rep(0,num_segments*2),
                                magnitude_bias_min  = rep(0,num_segments*2),
                                magnitude_bias_mean = rep(0,num_segments*2),
-                               magnitude_bias_var  = rep(0,num_segments*2),
-                               period            = rep(0,num_segments*2),
-                               amplitude         = rep(0,num_segments*2),
-                               uptakeRelease_obs = rep(0,num_segments*2),
-                               uptakeRelease_sim = rep(0,num_segments*2))
+                               magnitude_bias_var  = rep(0,num_segments*2))
    for(seg_j in 1:num_segments){
       seg_beg = seg_j
       seg_end = seg_j+1
