@@ -2,6 +2,7 @@ Package: segmentTS
 Title: Segmentation analysis for cyclic time series data
 Version: 0.0.0.9000
 Authors@R: person("Leonardo", "Calle", email = "leonardo.calle@montana.edu", role = c("aut", "cre"))
+Author: Leonardo Calle [aut, cre]
 Description: This package is based on Calle, L., B. Poulter and P. K. Patra (2018). The algorithms take cyclic time series data (e.g, CO2 seasonal cycle), categorize signals of the time series and evaluate the signal characteristics.   
 Depends: R (>= 3.4.1)
 License: GPL (>= 2) | file LICENSE
