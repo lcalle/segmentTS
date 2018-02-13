@@ -1,9 +1,9 @@
 #============================================================================================
 # Fns for segmentTS as in (Calle, Poulter, ana Patra 2018)
 #============================================================================================
+#' @import graphics
+#' @import grDevices
 #' @import stats
-NULL
-#' @import graphics,grDevices
 NULL
 
 #' Segment-based Statistics & Figures
