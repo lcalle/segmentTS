@@ -10,5 +10,4 @@ LazyData: true
 Imports:
 	stats
 	grDevices
-	graphics
 RoxygenNote: 6.0.1
