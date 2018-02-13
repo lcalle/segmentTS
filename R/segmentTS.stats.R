@@ -190,11 +190,9 @@ segmentTS.statsplots <- function(df.obs.evnt,df.sim.evnt,ls.evnt.pos,obs.name="o
       df_errorStats[which(df_errorStats$tracer==sim.name & df_errorStats$segment == seg_j),'magnitude_bias_min']  <- min(segment.dist$dist_vdiff)
       df_errorStats[which(df_errorStats$tracer==sim.name & df_errorStats$segment == seg_j),'magnitude_bias_mean'] <- mean(segment.dist$dist_vdiff)
       df_errorStats[which(df_errorStats$tracer==sim.name & df_errorStats$segment == seg_j),'magnitude_bias_var']  <- var(segment.dist$dist_vdiff)
-    }
+    }#..end segment loop
     if(save.plot==TRUE){dev.off()}
-    # end loop over segments ---------------------
-  }#..end tracer loop
-
+  #return data.frame for single region
   return(df_errorStats)
 }#..end of fn
 
