@@ -3,6 +3,8 @@
 #============================================================================================
 #' @import stats
 NULL
+#' @import graphics,grDevices
+NULL
 
 #' Segment-based Statistics & Figures
 #'
