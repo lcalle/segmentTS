@@ -3,6 +3,8 @@
 #============================================================================================
 #' @import stats
 NULL
+#' @importFrom("grDevices","dev.off","pdf")
+#' @importFrom("graphics","abline","axis","lines","par","plot","points","segments")
 
 #' Segment-based Statistics & Figures
 #'
