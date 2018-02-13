@@ -27,7 +27,7 @@ NULL
 #' At minimum, requires variables of values and date (YYYY-MM-DD)
 #' @return a data.frame object segment-based statistical summaries for all segments, obs and sim.
 #' @export
-segmentTS.statsplots <- function(df.obs.evnt,df.sim.evnt,ls.evnt.pos,obs.name="obs",sim.name="sim",time.units='days',val.units=NULL,save.plot=FALSE,outDir=getwd(),region.name=NULL){
+segmentTS.4statsplots <- function(df.obs.evnt,df.sim.evnt,ls.evnt.pos,obs.name="obs",sim.name="sim",time.units='days',val.units=NULL,save.plot=FALSE,outDir=getwd(),region.name=NULL){
 
 	#separate observation,simulation
 	obs.seg.time = ls.evnt.pos[['obs.eq']]
