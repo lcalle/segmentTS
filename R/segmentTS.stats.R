@@ -28,8 +28,8 @@ NULL
 segmentTS.statsplots <- function(df.obs.evnt,df.sim.evnt,ls.evnt.pos,obs.name="obs",sim.name="sim",time.units='days',val.units=NULL,save.plot=FALSE,outDir=getwd(),region.name=NULL){
 
 	#separate observation,simulation
-	obs.seg.time = ls.pos.evnt[['obs.eq']]
-	sim.seg.time = ls.pos.evnt[['sim.eq']]
+	obs.seg.time = ls.evnt.pos[['obs.eq']]
+	sim.seg.time = ls.evnt.pos[['sim.eq']]
 
 	#----------------------------------------
 	# Get number of segments and Store Data
