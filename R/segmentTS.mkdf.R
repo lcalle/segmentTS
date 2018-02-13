@@ -24,5 +24,5 @@ segmentTS.mkdf <- function(df.obs,df.sim,func.var,date.var){
   df.obs.evnt <- data.frame(val=df.obs[,func.var], time=df.obs[,date.var], ts=1, te=length(df.obs[,func.var]), match=0)
   df.sim.evnt <- data.frame(val=df.sim[,func.var], time=df.sim[,date.var], ts=1, te=length(df.sim[,func.var]), match=0)
 
-  return(list(df.obs.evnt=df.obs.evnt,df.sim.evnt=df.sim.evnt))
+  return(list(obs.evnt=df.obs.evnt,sim.evnt=df.sim.evnt))
 }

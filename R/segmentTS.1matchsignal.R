@@ -18,11 +18,14 @@ NULL
 #' but we keep this function here for future application.
 #' @param obs.evnt data.frame object with variables of start time (decimal.date), end time (decimal.date), match (integer)
 #' @param sim.evnt data.frame, as above, but for simulated data
-#' @param limit4match number to search the vector in obs.evnt,sim.evnt for similar events (set to zero)
+#' @param full.series default is TRUE. if FALSE, matching index depends on
+#' start and end times of events defined in the time-series.
+#' @param limit4match maximum number of values to search obs.evnt,sim.evnt for similar events.
+#' Default is zero, which means the search radius is small.
 #' @return a list with both obs.evnt,sim.evnt with an additional variable for the matching index; used in segmentTS.2catsignal
 #' @export
-segmentTS.1matchsignal <- function(obs.evnt, sim.evnt, limit4match = 0){
-  ##############################c
+segmentTS.1matchsignal <- function(obs.evnt, sim.evnt, full.series=TRUE, limit4match = 0){
+  ##############################
   #
   # D A T A   S T R U C T U R E
   # -- event data: i.e., peaks and troughs in the graph by visual inspection
@@ -34,28 +37,31 @@ segmentTS.1matchsignal <- function(obs.evnt, sim.evnt, limit4match = 0){
   # Returns: for each 'o' in obs$ and 's' in sim$,
   #        : returns a list with both data.frames, incld. the number of matching event or -999 (no match)
   #
-  ##############################c
-  #determine overlap
-  n=nrow(obs.evnt)
-  m=nrow(sim.evnt)
-  overlap <- matrix(data = -999, nrow = nrow(obs.evnt), ncol=nrow(sim.evnt))
-  for(i in 1:n){
-    for(j in 1:m){
-      overlap[i,j] = min(obs.evnt[i,'te'], sim.evnt[j,'te']) - max(obs.evnt[i,'ts'], sim.evnt[j,'ts']) + 1
-      if(overlap[i,j] < limit4match){overlap[i,j]=-999}
-    }
+  ##############################
+  if(full.series==TRUE){
+	  obs.evnt$match <- 1:obs.evnt$te[1]
+  	  sim.evnt$match <- 1:sim.evnt$te[1]
+  }else{
+      #determine overlap
+      n=nrow(obs.evnt)
+      m=nrow(sim.evnt)
+      overlap <- matrix(data = -999, nrow = nrow(obs.evnt), ncol=nrow(sim.evnt))
+      for(i in 1:n){
+        for(j in 1:m){
+          overlap[i,j] = min(obs.evnt[i,'te'], sim.evnt[j,'te']) - max(obs.evnt[i,'ts'], sim.evnt[j,'ts']) + 1
+          if(overlap[i,j] < limit4match){overlap[i,j]=-999}
+        }
+      }
+      #end overlap
+      
+      #update objects (obs.evnt, sim.evnt) with the matching index
+      while(max(overlap) > -999){
+        indx = which(overlap==max(overlap), arr.ind=TRUE)
+        obs.evnt$match[indx[1,1]] = indx[1,2]
+        sim.evnt$match[indx[1,2]] = indx[1,1]
+        overlap[indx[1,1],] = -999
+        overlap[,indx[1,2]] = -999
+      }
   }
-  #end overlap
-  
-  #update objects (obs.evnt, sim.evnt) with the matching index
-  while(max(overlap) > -999){
-    indx = which(overlap==max(overlap), arr.ind=TRUE)
-    obs.evnt$match[indx[1,1]] = indx[1,2]
-    sim.evnt$match[indx[1,2]] = indx[1,1]
-    overlap[indx[1,1],] = -999
-    overlap[,indx[1,2]] = -999
-  }
-  #ls.evnt = list(obs.evnt, sim.evnt)
-  #names(ls.evnt) = c('obs.evnt', 'sim.evnt')
   return(list(obs.evnt=obs.evnt, sim.evnt=sim.evnt))
 } 

@@ -37,7 +37,6 @@ segmentTS.2catsignal <- function(dat, lolim = -999){
   
   for(i in 2:(nrow(dat)-1)){
     if(dat$val[i] > lolim){
-      #########main
       if( (dat$val[i] - dat$val[i-1]) < 0 & (dat$val[i+1] - dat$val[i]) > 0){
         dat$pos[i] = -2
       }else if( (dat$val[i] - dat$val[i-1]) < 0 & (dat$val[i+1] - dat$val[i]) < 0){
@@ -49,11 +48,10 @@ segmentTS.2catsignal <- function(dat, lolim = -999){
       }else{
         dat$pos[i] = 0     
       }
-      #########end main
     }else{
       dat$pos[i] = 0
     }
-  }#end forloop
+  }
   
   #set position on curve for first and last data point as the position determine on x=2 and x=n-1
   dat$pos[1]=dat$pos[2]
