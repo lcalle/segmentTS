@@ -60,6 +60,4 @@ segmentTS.4segdist <- function(obs.seg, sim.seg){
 			   poly_vsim= poly_vsim,
 			   poly_tobs= poly_tobs,
                poly_vobs= poly_vobs))
-
-))
 } 
