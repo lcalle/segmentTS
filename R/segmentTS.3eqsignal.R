@@ -20,7 +20,7 @@ NULL
 #' @param obs.evnt data.frame object with variables derived from segmentTS.2catsignal
 #' @param sim.evnt data.frame, variables as in obs.evnt, but for simulated data.
 #' @param val.mindays integer number of timesteps (days) between peaks troughs; helps to remove false peaks and troughs.
-#' @param manual_removal section of code identifying which peak or trough to remove from the time-series.
+#' @param manual_removal a function identifying which peak or trough to remove from the time-series.
 #' By visual inspection, if the first peak/trough is a false peak/trough,
 #' then pass code as obs.peak[c(-1),] or obs.trough[c(-1),]. Add multiple removals via obs.peak[c(-1,-2,...),].
 #' Pass code for multiple signals with semi-colons as in manual_removal="obs.peak[c(-1),]; sim.peak[c(-1),]"
@@ -50,7 +50,7 @@ segmentTS.3eqsignal <- function(obs.evnt, sim.evnt, val.mindays = 250, manual_re
   # ..rise-rise, decline-decline
   # ..taken as input conditional code section
   #-------------------------------------------
-  if(!is.null(manual_removal)){manual_removal}  
+  if(!is.null(manual_removal)){manual_removal()}  
 
   #------------------------------------------
   # constrain peaks (+) troughs (-) values
