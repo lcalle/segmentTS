@@ -18,6 +18,7 @@ segmentTS.mkdf <- function(df.obs,df.sim,func.var,date.var){
 
   #make sure there is overlap in dates between sim and obs datasets
   df.sim  	  <- df.sim[which((df.sim[,date.var] %in% df.obs[,date.var]) == TRUE & (duplicated(df.sim[,date.var])==FALSE)),]
+  df.obs      <- df.obs[which((df.obs[,date.var] %in% df.sim[,date.var]) == TRUE & (duplicated(df.obs[,date.var])==FALSE)),]
 
   #set empty data frame
   df.obs.evnt <- data.frame(val=df.obs[,func.var], time=df.obs[,date.var], ts=1, te=length(df.obs[,func.var]), match=0)

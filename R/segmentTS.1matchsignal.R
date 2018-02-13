@@ -39,9 +39,7 @@ segmentTS.1matchsignal <- function(obs.evnt, sim.evnt, limit4match = 0){
   n=nrow(obs.evnt)
   m=nrow(sim.evnt)
   overlap <- matrix(data = -999, nrow = nrow(obs.evnt), ncol=nrow(sim.evnt))
-  print(paste0("total obs = ",n))
   for(i in 1:n){
-    if((i %% 50) == 0){Sys.sleep(0.001); print(paste0("i = ",i))}
     for(j in 1:m){
       overlap[i,j] = min(obs.evnt[i,'te'], sim.evnt[j,'te']) - max(obs.evnt[i,'ts'], sim.evnt[j,'ts']) + 1
       if(overlap[i,j] < limit4match){overlap[i,j]=-999}
