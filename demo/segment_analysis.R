@@ -1,9 +1,13 @@
-#......................................................
-#  M A I N   L O O P  -  S E R I E S  D I S T A N C E
+#==================================================================
+#  M A I N 
 #
-# ..plot segment matching by model, region, segment 
-# ..get statistics for series distance
-#......................................................
+# OBJECTIVE: get segment-based statistics for two time-series,
+#		   : ..create plots for visual inspection
+# DATA     : use data(dfxco2). see man for details
+#          : seasonal cycle time-series of XCO2
+#          : ..for GOSAT (satellite) and Simulated XCO2
+# FNS      : segment-based algorithms
+#==================================================================
 inDir = "data/"
 outDir= "outputs/"
 #set region codes and corresponding region names for reference

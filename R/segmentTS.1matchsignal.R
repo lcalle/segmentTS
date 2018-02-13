@@ -4,9 +4,6 @@
 #============================================#
 #' @import stats
 NULL
-#============================================================================================
-#          Functions for segment-based statistics of event-type signals
-#============================================================================================
 
 #' Match Signals
 #'
@@ -21,7 +18,7 @@ NULL
 #' @param limit4match number to search the vector in obs.evnt,sim.evnt for similar events (set to zero)
 #' @return a list with both obs.evnt,sim.evnt with an additional variable for the matching index; used in segmentTS.2catsignal
 #' @export
-segmentTS.1matchsignal     <- function(obs.evnt, sim.evnt, limit4match = 0){
+segmentTS.1matchsignal <- function(obs.evnt, sim.evnt, limit4match = 0){
   ##############################c
   #
   # D A T A   S T R U C T U R E

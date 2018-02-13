@@ -27,7 +27,7 @@ NULL
 #' @return list object with two data.frames with number of peaks,troughs equalized.
 #' The data frame only contains the vector positions of the peaks and troughs.
 #' @export
-segmentTS.3eqsignal  <- function(obs.evnt, sim.evnt, val.mindays = 250, manual_removal = NULL){
+segmentTS.3eqsignal <- function(obs.evnt, sim.evnt, val.mindays = 250, manual_removal = NULL){
   ###############################
   #
   # D A T A   S T R U C T U R E

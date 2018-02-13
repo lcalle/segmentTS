@@ -17,7 +17,7 @@ NULL
 #' @param lolim lower limit for consideration of matching; set to low value so that all values potentially match.
 #' @return data.frame object with variable 'pos', categorized as above; used in segmentTS.2eqsignal,
 #' @export
-segmentTS.2catsignal       <- function(dat, lolim = -999){  
+segmentTS.2catsignal <- function(dat, lolim = -999){  
   ##############################c
   #
   # D A T A   S T R U C T U R E
