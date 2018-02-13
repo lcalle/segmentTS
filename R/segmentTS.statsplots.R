@@ -4,8 +4,6 @@
 #============================================#
 #' @import stats
 NULL
-#' @import graphics
-#' @import grDevices
 
 #============================================================================================
 #          Functions for segment-based statistics of event-type signals
