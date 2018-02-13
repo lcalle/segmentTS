@@ -2,17 +2,13 @@
 #            F U N C T I O N S               #
 #     ::required for segment analysis::      #
 #============================================#
-#' @import stats
-NULL
-
-#============================================================================================
-#          Functions for segment-based statistics of event-type signals
-#============================================================================================
 
 #' Segment-based Statistics & Figures
 #'
 #' This function collates segment-based statistics based on the 
 #' observed and simulated time-series.
+#' @import graphics
+#' @import grDevices
 #' @param df.obs.evnt data.frame object for full time-series of observational data, from segmentTS.1matchsignal.
 #' @param df.sim.evnt data.frame object for full time-series of simulated data, from segmentTS.1matchsignal.
 #' @param ls.evnt.pos list object from segmentTS.3eqsignal with positions of
