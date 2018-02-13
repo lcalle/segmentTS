@@ -127,9 +127,9 @@ segmentTS.4statsplots <- function(obs.evnt,sim.evnt,ls.evnt.pos,obs.name="obs",s
       graphics::points(x=obs.segment$time[seq(1,length(obs.segment$time), length=35)], y=obs.segment$val[seq(1,length(obs.segment$time), length=35)], pch=21,cex=1.2, bg='deepskyblue')
       graphics::points(x=sim.segment$time[seq(1,length(sim.segment$time), length=35)], y=sim.segment$val[seq(1,length(sim.segment$time), length=35)], pch=21,cex=1.2, bg='deepskyblue')
       #plot only a few connecting segments btwn obs and sim, otherwise clutter
-      graphics::segments(x0= obs.segment$time[c(TRUE,rep(FALSE,5))], y0= obs.segment$val[c(TRUE,rep(FALSE,5))],
-                 x1= segment.dist[['poly_t']][c(TRUE,rep(FALSE,5))],
-                 y1= segment.dist[['poly_v']][c(TRUE,rep(FALSE,5))], col='grey75')
+      graphics::segments(x0= segment.dist[['poly_t.obs']][c(TRUE,rep(FALSE,5))], y0= segment.dist[['poly_v.sim']][c(TRUE,rep(FALSE,5))],
+                 x1= segment.dist[['poly_t.sim']][c(TRUE,rep(FALSE,5))],
+                 y1= segment.dist[['poly_v.sim']][c(TRUE,rep(FALSE,5))], col='grey75')
       graphics::abline(h=0,lty=1, lwd=0.5, col='black')
 
       #----------------------------------------
