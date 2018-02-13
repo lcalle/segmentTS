@@ -17,11 +17,10 @@ NULL
 #' @param sim.name name of simulated data for table (string).
 #' @param time.units units of time for calculating period length in the time-series; default is days.
 #' @param val.units units of the value for the variable in the time-series.
-#' @param save.plot save plot as a pdf; default out is the current working directory.
+#' @param save.plot save plot as a pdf (TRUE/FALSE); default is FALSE; default out is the current working directory.
 #' @param outDir location to save plot; default location is getwd()).
 #' @param region.name name of underlying region for table (string).
 #' Default is 'null_region'; not important unless evaluating multiple regions.
-#' @param save.plot whether to save figures to file (TRUE/FALSE); default to FALSE.
 #' At minimum, requires variables of values and date (YYYY-MM-DD)
 #' @return a data.frame object segment-based statistical summaries for all segments, obs and sim.
 #' @export
