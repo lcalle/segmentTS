@@ -54,5 +54,12 @@ segmentTS.4segdist <- function(obs.seg, sim.seg){
   
   #ls.diff = list(dist_tdiff, dist_vdiff, poly_t.sim, poly_v.sim)
   #names(ls.diff) = c('dist_tdiff', 'dist_vdiff', 'poly_t', 'poly_v')
-  return(list(dist_tdiff=dist_tdiff, dist_vdiff=dist_vdiff, poly_t.sim=poly_t.sim, poly_v.sim=poly_v.sim))
+  return(list(dist_tdiff= dist_tdiff,
+			  dist_vdiff= dist_vdiff,
+			   poly_tsim= poly_tsim,
+			   poly_vsim= poly_vsim,
+			   poly_tobs= poly_tobs,
+               poly_vobs= poly_vobs))
+
+))
 } 
