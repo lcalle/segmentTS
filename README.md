@@ -6,6 +6,6 @@
 &nbsp; `devtools::install_github("lcalle/segmentTS")` <br />
 *Sample R script*: See ./demo/segment_analysis.R. After installing and loading the
 library in R via `library(segmentTS)` run the demo script using `demo(segment_analysis)`. <br />
-*Sample Data*: Detrended XCO2 seasonal cycles for GOSAT-ACOSv3.5 and Model Simulations for global bio-regions (see manual).
+*Sample Data*: Detrended XCO2 seasonal cycles for GOSAT-ACOSv3.5 and Model Simulations for global bio-regions (see manual). <br />
 *Manual*: ./segmentTS.pdf <br />
 
