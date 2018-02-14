@@ -84,8 +84,8 @@ segmentTS.4statsplots <- function(obs.evnt,sim.evnt,ls.evnt.pos,obs.name="obs",s
       graphics::par(mar=c(4,6,5,3),mfcol=c(2,2))
 
       #plot attributes
-      x.lim = c(min(obs.evnt$time,obs.segment$time[1],sim.segment$time[1]), max(obs.segment$time[length(obs.segment$time)],sim.segment$time[length(sim.segment$time)]))
-      y.lim = c(min(obs.evnt$val,obs.segment$val,sim.segment$val), max(obs.evnt$val,obs.segment$val,sim.segment$val))
+      x.lim = c(min(obs.evnt$time[1],sim.evnt$time[1]), max(obs.evnt$time[length(obs.evnt$time)],sim.evnt$time[length(sim.evnt$time)]))
+      y.lim = c(min(obs.evnt$val,sim.evnt$val), max(obs.evnt$val,sim.evnt$val))
       plot.dates = seq.Date(from = x.lim[1], to = x.lim[2], by = 'month')
       plot.all.dates = seq.Date(from = obs.evnt$time[1], to = obs.evnt$time[length(obs.evnt$time)], by = 'month')
 
