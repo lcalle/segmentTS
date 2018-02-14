@@ -5,7 +5,8 @@
 \title{Equalize Signals}
 \usage{
 segmentTS.3eqsignal(obs.evnt, sim.evnt, val.mindays = 250,
-  manual_removal = NULL)
+  rm.obs.peak = NULL, rm.obs.trough = NULL, rm.sim.peak = NULL,
+  rm.sim.trough = NULL)
 }
 \arguments{
 \item{obs.evnt}{data.frame object with variables derived from segmentTS.2catsignal}
@@ -14,10 +15,17 @@ segmentTS.3eqsignal(obs.evnt, sim.evnt, val.mindays = 250,
 
 \item{val.mindays}{integer number of timesteps (days) between peaks troughs; helps to remove false peaks and troughs.}
 
-\item{manual_removal}{section of code identifying which peak or trough to remove from the time-series.
-By visual inspection, if the first peak/trough is a false peak/trough,
-then pass code as obs.peak[c(-1),] or obs.trough[c(-1),]. Add multiple removals via obs.peak[c(-1,-2,...),].
-Pass code for multiple signals with semi-colons as in manual_removal="obs.peak[c(-1),]; sim.peak[c(-1),]"}
+\item{rm.obs.peak}{integer index of peak to remove from the observational time-series.
+Pass multiple indices in a numeric vector.}
+
+\item{rm.obs.trough}{integer index of trough to remove from the observational time-series.
+Pass multiple indices in a numeric vector.}
+
+\item{rm.sim.peak}{integer index of peak to remove from the simulated time-series.
+Pass multiple indices in a numeric vector.}
+
+\item{rm.sim.trough}{integer index of trough to remove from the simulated time-series.
+Pass multiple indices in a numeric vector.}
 }
 \value{
 list object with two data.frames with number of peaks,troughs equalized.
@@ -27,8 +35,12 @@ The data frame only contains the vector positions of the peaks and troughs.
 This function takes in the time-series data for observed and simulated from segmentTS.2catsignal.
 Attempts to equalize the number of peaks and troughs in simulated time-series,
 to match number of signals in the observed time-series. This fn defines the boundary positions
-for the segments in the full time-series.
-Modify the criteria for removing false peaks/troughs in this section. 
-i.e., remove short-term signals and focus on seasonal patterns of rise and fall.
-Also, set individual criteria to smooth signal characterization for different simulated time-series.
+for the segments in the full time-series. Optional arguments are provide for 
+manual removal of peaks and/or troughs in the observational or simulated signal.
+Manual removal by index should be specified after visual inspection of the 
+automated identification of segments in the time-series. If the automated procedure
+identifies false minimums, maximums, or non-focal signals, these can be removed
+after visual inspection by specifying the peak or trough index number, counting
+from the left-most peak/trough (1) to the right-most peak/trough (n) obseverved 
+in graphical outputs.
 }
