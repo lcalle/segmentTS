@@ -1,4 +1,6 @@
 ## segmentTS
+*Development Version 0.0.0.9000*
+
 *Description*: A segmentation algorithm for cyclic time series, an R package <br />
 *Details*: See the pdf manual ./segmentTS.pdf <br />
 *Install*: Install in R with the devtools R-pkg (simplest method) <br />
