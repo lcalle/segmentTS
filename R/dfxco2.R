@@ -6,7 +6,7 @@
 #' using JAMSTEC's ACTM. XCO2 was then sampled via co-location to GOSAT observations.
 #' Both GOSAT and simulated XCO2 underwent signal decomposition,
 #' using the ccgcrv algoritm <https://www.esrl.noaa.gov/gmd/ccgg/mbl/crvfit/crvfit.html>.
-#' 
+#' All data (values) are in units of ppm, unless specified otherwise.
 #'
 #' @docType data
 #'
@@ -26,7 +26,11 @@
 #'   \item harm: values of the harmonic part of the function (float)
 #'   \item smres: values of the short-term smoothed residuals from the function (float)
 #'   \item trres: values of the long-term smoothed residual from the function (float)
-#'   \item trres: values of the growth rate; the first derivative of the trend curve (float)
+#'   \item gr: values of the growth rate; the first derivative of the trend curve (float)
+#'   \item date_obj: date (YYYY-MM-DD)
+#'   \item model: origin of data. Satellite-derived XCO2 observations (gosat) or Simulated XCO2 based on Dynamic Global Vegetation Models
+#'   \item region_code: (integer) numeric code for different bio-regions
+#'   \item region_name: (character) name of bio-region
 #' }
 #' @keywords datasets
 #'
