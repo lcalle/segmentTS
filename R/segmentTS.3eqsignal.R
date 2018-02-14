@@ -13,21 +13,29 @@ NULL
 #' This function takes in the time-series data for observed and simulated from segmentTS.2catsignal.
 #' Attempts to equalize the number of peaks and troughs in simulated time-series,
 #' to match number of signals in the observed time-series. This fn defines the boundary positions
-#' for the segments in the full time-series.
-#' Modify the criteria for removing false peaks/troughs in this section. 
-#' i.e., remove short-term signals and focus on seasonal patterns of rise and fall.
-#' Also, set individual criteria to smooth signal characterization for different simulated time-series.
+#' for the segments in the full time-series. Optional arguments are provide for 
+#' manual removal of peaks and/or troughs in the observational or simulated signal.
+#' Manual removal by index should be specified after visual inspection of the 
+#' automated identification of segments in the time-series. If the automated procedure
+#' identifies false minimums, maximums, or non-focal signals, these can be removed
+#' after visual inspection by specifying the peak or trough index number, counting
+#' from the left-most peak/trough (1) to the right-most peak/trough (n) obseverved 
+#' in graphical outputs. 
 #' @param obs.evnt data.frame object with variables derived from segmentTS.2catsignal
 #' @param sim.evnt data.frame, variables as in obs.evnt, but for simulated data.
 #' @param val.mindays integer number of timesteps (days) between peaks troughs; helps to remove false peaks and troughs.
-#' @param manual_removal a function identifying which peak or trough to remove from the time-series.
-#' By visual inspection, if the first peak/trough is a false peak/trough,
-#' then pass code as obs.peak[c(-1),] or obs.trough[c(-1),]. Add multiple removals via obs.peak[c(-1,-2,...),].
-#' Pass code for multiple signals with semi-colons as in manual_removal="obs.peak[c(-1),]; sim.peak[c(-1),]"
+#' @param rm.obs.peak integer index of peak to remove from the observational time-series.
+#' Pass multiple indices in a numeric vector.
+#' @param rm.obs.trough integer index of trough to remove from the observational time-series.
+#' Pass multiple indices in a numeric vector.
+#' @param rm.sim.peak integer index of peak to remove from the simulated time-series.
+#' Pass multiple indices in a numeric vector.
+#' @param rm.sim.trough integer index of trough to remove from the simulated time-series.
+#' Pass multiple indices in a numeric vector.
 #' @return list object with two data.frames with number of peaks,troughs equalized.
 #' The data frame only contains the vector positions of the peaks and troughs.
 #' @export
-segmentTS.3eqsignal <- function(obs.evnt, sim.evnt, val.mindays = 250, manual_removal = NULL){
+segmentTS.3eqsignal <- function(obs.evnt, sim.evnt, val.mindays = 250, rm.obs.peak=NULL,rm.obs.trough=NULL,rm.sim.peak=NULL,rm.sim.trough=NULL){
   ###############################
   #
   # D A T A   S T R U C T U R E
@@ -47,10 +55,13 @@ segmentTS.3eqsignal <- function(obs.evnt, sim.evnt, val.mindays = 250, manual_re
  
   #-------------------------------------------
   # match segment by visual inspection
-  # ..rise-rise, decline-decline
-  # ..taken as input conditional code section
+  # ..rise-rise, fall-fall
+  # ..manually defined by index in args
   #-------------------------------------------
-  if(!is.null(manual_removal)){manual_removal()}  
+  if(!is.null(rm.obs.peak)){  obs.peak   <- obs.peak[-1*rm.obs.peak,]}
+  if(!is.null(rm.obs.trough)){obs.trough <- obs.trough[-1*rm.obs.trough,]}
+  if(!is.null(rm.sim.peak)){  sim.peak   <- sim.peak[-1*rm.sim.peak,]}
+  if(!is.null(rm.sim.trough)){sim.trough <- sim.trough[-1*rm.sim.trough,]}
 
   #------------------------------------------
   # constrain peaks (+) troughs (-) values
