@@ -46,9 +46,9 @@ segmentTS.4statsplots <- function(obs.evnt,sim.evnt,ls.evnt.pos,obs.name="obs",s
                                tracer  = rep(c(obs.name,sim.name),times=num_segments),
                                n_obs   = rep(0,num_segments*2),
                                segment = rep(1:num_segments, each=2),
-							   segment_type = rep(NA,num_segments*2),
-							   period           = rep(0,num_segments*2),
-                               amplitude        = rep(0,num_segments*2),
+			       segment_type  = rep(NA,num_segments*2),
+			       period        = rep(0,num_segments*2),
+                               amplitude     = rep(0,num_segments*2),
                                timing_rmse         = rep(0,num_segments*2),
                                timing_bias_max     = rep(0,num_segments*2),
                                timing_bias_min     = rep(0,num_segments*2),
@@ -76,7 +76,7 @@ segmentTS.4statsplots <- function(obs.evnt,sim.evnt,ls.evnt.pos,obs.name="obs",s
       
       #############################
       #          P L O T          #
-	  #  multi-plot evaluations   #
+      #  multi-plot evaluations   #
       #############################
       #tri-plot with errors for segment
       #..only create one plot per model for the seasonal cycle
