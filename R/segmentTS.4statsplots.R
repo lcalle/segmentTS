@@ -163,7 +163,7 @@ segmentTS.4statsplots <- function(obs.evnt,sim.evnt,ls.evnt.pos,obs.name="obs",s
      
       #segment start,end day of year
       obs.doy.start     = (as.POSIXlt(obs.segment$time[1], format = "%Y-%m-%d"))$yday
-      obs.doy.end       = (as.POSIXlt(obs.segment$[length(obs.segment$time)], format = "%Y-%m-%d"))$yday
+      obs.doy.end       = (as.POSIXlt(obs.segment$time[length(obs.segment$time)], format = "%Y-%m-%d"))$yday
 
       #update stats
       df_errorStats[which(df_errorStats$tracer==obs.name & df_errorStats$segment == seg_j),'tracer']       <- obs.name
