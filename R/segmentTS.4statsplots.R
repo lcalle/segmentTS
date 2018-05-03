@@ -47,6 +47,8 @@ segmentTS.4statsplots <- function(obs.evnt,sim.evnt,ls.evnt.pos,obs.name="obs",s
                                n_obs   = rep(0,num_segments*2),
                                segment = rep(1:num_segments, each=2),
 							   segment_type = rep(NA,num_segments*2),
+                               doy_start    = rep(0,num_segments*2),
+                               doy_end      = rep(0,num_segments*2),
 							   period           = rep(0,num_segments*2),
                                amplitude        = rep(0,num_segments*2),
                                timing_rmse         = rep(0,num_segments*2),
@@ -161,7 +163,7 @@ segmentTS.4statsplots <- function(obs.evnt,sim.evnt,ls.evnt.pos,obs.name="obs",s
      
       #segment start,end day of year
       obs.doy.start     = (as.POSIXlt(obs.segment$time[1], format = "%Y-%m-%d"))$yday
-      obs.doy.end       = (as.POSIXlt(obs.segment$time[1], format = "%Y-%m-%d"))$yday
+      obs.doy.end       = (as.POSIXlt(obs.segment$[length(obs.segment$time)], format = "%Y-%m-%d"))$yday
 
       #update stats
       df_errorStats[which(df_errorStats$tracer==obs.name & df_errorStats$segment == seg_j),'tracer']       <- obs.name
@@ -184,7 +186,7 @@ segmentTS.4statsplots <- function(obs.evnt,sim.evnt,ls.evnt.pos,obs.name="obs",s
       
       #segment start,end day of year
       sim.doy.start     = (as.POSIXlt(sim.segment$time[1], format = "%Y-%m-%d"))$yday
-      sim.doy.end       = (as.POSIXlt(sim.segment$time[1], format = "%Y-%m-%d"))$yday
+      sim.doy.end       = (as.POSIXlt(sim.segment$time[length(sim.segment$time)], format = "%Y-%m-%d"))$yday
 
       #update stats
       df_errorStats[which(df_errorStats$tracer==sim.name & df_errorStats$segment == seg_j),'tracer']            <- sim.name
