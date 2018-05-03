@@ -47,6 +47,8 @@ segmentTS.4statsplots <- function(obs.evnt,sim.evnt,ls.evnt.pos,obs.name="obs",s
                                n_obs   = rep(0,num_segments*2),
                                segment = rep(1:num_segments, each=2),
 							   segment_type = rep(NA,num_segments*2),
+                               doy_start    = rep(0,num_segments*2),
+                               doy_end      = rep(0,num_segments*2),
 							   period           = rep(0,num_segments*2),
                                amplitude        = rep(0,num_segments*2),
                                timing_rmse         = rep(0,num_segments*2),
@@ -158,11 +160,17 @@ segmentTS.4statsplots <- function(obs.evnt,sim.evnt,ls.evnt.pos,obs.name="obs",s
       #amplitude
       obs.amp           = obs.segment$val[length(obs.segment$val)] - obs.segment$val[1] 
       segment_type      = ifelse(obs.amp > 0, 'rise', 'fall')
-      
+     
+      #segment start,end day of year
+      obs.doy.start     = (as.POSIXlt(obs.segment$time[1], format = "%Y-%m-%d"))$yday
+      obs.doy.end       = (as.POSIXlt(obs.segment$time[1], format = "%Y-%m-%d"))$yday
+
       #update stats
       df_errorStats[which(df_errorStats$tracer==obs.name & df_errorStats$segment == seg_j),'tracer']       <- obs.name
       df_errorStats[which(df_errorStats$tracer==obs.name & df_errorStats$segment == seg_j),'n_obs']        <- nrow(obs.segment)
       df_errorStats[which(df_errorStats$tracer==obs.name & df_errorStats$segment == seg_j),'segment_type'] <- segment_type
+      df_errorStats[which(df_errorStats$tracer==obs.name & df_errorStats$segment == seg_j),'doy_start']    <- obs.doy.start
+      df_errorStats[which(df_errorStats$tracer==obs.name & df_errorStats$segment == seg_j),'doy_end']      <- obs.doy.start
       df_errorStats[which(df_errorStats$tracer==obs.name & df_errorStats$segment == seg_j),'period']       <- abs(obs.per)
       df_errorStats[which(df_errorStats$tracer==obs.name & df_errorStats$segment == seg_j),'amplitude']    <- abs(obs.amp)
       
@@ -176,10 +184,16 @@ segmentTS.4statsplots <- function(obs.evnt,sim.evnt,ls.evnt.pos,obs.name="obs",s
       sim.amp = sim.segment$val[length(sim.segment$val)] - sim.segment$val[1] 
       segment_type = ifelse(obs.amp > 0, 'rise', 'fall')
       
+      #segment start,end day of year
+      sim.doy.start     = (as.POSIXlt(sim.segment$time[1], format = "%Y-%m-%d"))$yday
+      sim.doy.end       = (as.POSIXlt(sim.segment$time[1], format = "%Y-%m-%d"))$yday
+
       #update stats
       df_errorStats[which(df_errorStats$tracer==sim.name & df_errorStats$segment == seg_j),'tracer']            <- sim.name
       df_errorStats[which(df_errorStats$tracer==sim.name & df_errorStats$segment == seg_j),'n_obs']             <- nrow(sim.segment)
       df_errorStats[which(df_errorStats$tracer==sim.name & df_errorStats$segment == seg_j),'segment_type']      <- segment_type
+      df_errorStats[which(df_errorStats$tracer==obs.name & df_errorStats$segment == seg_j),'doy_start']         <- sim.doy.start
+      df_errorStats[which(df_errorStats$tracer==obs.name & df_errorStats$segment == seg_j),'doy_end']           <- sim.doy.end
       df_errorStats[which(df_errorStats$tracer==sim.name & df_errorStats$segment == seg_j),'period']            <- abs(sim.per)
       df_errorStats[which(df_errorStats$tracer==sim.name & df_errorStats$segment == seg_j),'amplitude']         <- abs(sim.amp)
       df_errorStats[which(df_errorStats$tracer==sim.name & df_errorStats$segment == seg_j),'timing_rmse']           <- sqrt(mean(segment.dist$dist_tdiff^2))
