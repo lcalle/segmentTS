@@ -192,8 +192,8 @@ segmentTS.4statsplots <- function(obs.evnt,sim.evnt,ls.evnt.pos,obs.name="obs",s
       df_errorStats[which(df_errorStats$tracer==sim.name & df_errorStats$segment == seg_j),'tracer']            <- sim.name
       df_errorStats[which(df_errorStats$tracer==sim.name & df_errorStats$segment == seg_j),'n_obs']             <- nrow(sim.segment)
       df_errorStats[which(df_errorStats$tracer==sim.name & df_errorStats$segment == seg_j),'segment_type']      <- segment_type
-      df_errorStats[which(df_errorStats$tracer==obs.name & df_errorStats$segment == seg_j),'doy_start']         <- sim.doy.start
-      df_errorStats[which(df_errorStats$tracer==obs.name & df_errorStats$segment == seg_j),'doy_end']           <- sim.doy.end
+      df_errorStats[which(df_errorStats$tracer==sim.name & df_errorStats$segment == seg_j),'doy_start']         <- sim.doy.start
+      df_errorStats[which(df_errorStats$tracer==sim.name & df_errorStats$segment == seg_j),'doy_end']           <- sim.doy.end
       df_errorStats[which(df_errorStats$tracer==sim.name & df_errorStats$segment == seg_j),'period']            <- abs(sim.per)
       df_errorStats[which(df_errorStats$tracer==sim.name & df_errorStats$segment == seg_j),'amplitude']         <- abs(sim.amp)
       df_errorStats[which(df_errorStats$tracer==sim.name & df_errorStats$segment == seg_j),'timing_rmse']           <- sqrt(mean(segment.dist$dist_tdiff^2))
