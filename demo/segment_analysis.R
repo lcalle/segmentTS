@@ -61,7 +61,7 @@ sim.evnt <- segmentTS.2catsignal(ls.evnt[['sim.evnt']], lolim = -999)
 #returns list of two data.frames only with positions of equalized peaks,troughs
 #after visual inspection of plots, if removal of peak/trough is neccessary, 
 #..then specify the index of peak/trough, counting from left to right in plots
-ls.evnt.pos <- segmentTS.3eqsignal.tmp(obs.evnt= obs.evnt,
+ls.evnt.pos <- segmentTS.3eqsignal(obs.evnt= obs.evnt,
                      sim.evnt= sim.evnt,
                      val.mindays = 250)
 
